@@ -1,13 +1,21 @@
 <div class="product-custom">
   <h1>{{ product.title }}</h1>
   <div class="product-images">
+    <img id="main-image" src="{{ product.media[0].preview_image | image_url: 'large' }}" 
+         alt="{{ product.media[0].alt | escape }}" 
+         width="600" 
+         height="400" 
+         loading="lazy">
+  </div>
+  <div class="thumbnails">
     {% for media in product.media %}
-      <img src="{{ media.preview_image | image_url: 'large' }}" 
+      <img class="thumbnail" 
+           src="{{ media.preview_image | image_url: 'small' }}" 
            alt="{{ media.alt | escape }}" 
-           width="600" 
-           height="400"
-           loading="lazy"
-           >
+           data-large="{{ media.preview_image | image_url: 'large' }}" 
+           width="100" 
+           height="100" 
+           loading="lazy">
     {% endfor %}
   </div>
   <div class="product-info">
@@ -15,6 +23,20 @@
     <span>{{ product.price | money }}</span>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mainImage = document.getElementById('main-image');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', () => {
+        const largeImageUrl = thumbnail.getAttribute('data-large');
+        mainImage.src = largeImageUrl;
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
