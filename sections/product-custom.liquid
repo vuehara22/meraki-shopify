@@ -1,0 +1,30 @@
+<div class="product-custom">
+  <h1>{{ product.title }}</h1>
+  <div class="product-images">
+    {% for media in product.media %}
+      <img src="{{ media.preview_image | image_url: 'large' }}" 
+           alt="{{ media.alt | escape }}" 
+           width="600" 
+           height="400"
+           loading="lazy"
+           >
+    {% endfor %}
+  </div>
+  <div class="product-info">
+    <p>{{ product.description }}</p>
+    <span>{{ product.price | money }}</span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Custom",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
