@@ -1,0 +1,35 @@
+<div class="complementary-images">
+  {% for image in section.settings.images %}
+    <img src="{{ media.preview_image | image_url: 'large' | asset_url: 'webp' }}" alt="{{ media.alt | escape }}" width="1300" height="900" loading="lazy">
+  {% endfor %}
+  {% if section.settings.videos %}
+    <iframe 
+      width="560" 
+      height="315" 
+      src="{{ section.settings.videos }}" 
+      frameborder="0" 
+      allow="autoplay; encrypted-media" 
+      allowfullscreen>
+    </iframe>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Complementary Images",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "images",
+      "label": "Images",
+      "info": "Select images to display."
+    },
+    {
+      "type": "text", 
+      "id": "videos", 
+      "label": "Video URL", 
+      "info": "Enter the video URL (YouTube or Vimeo)."
+    }
+  ]
+}
+{% endschema %}
